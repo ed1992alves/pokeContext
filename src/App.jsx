@@ -3,9 +3,7 @@ import { hot } from "react-hot-loader";
 import Router from "./router"
 const App = (props) => {
     return (
-        <Router>
-
-        </Router>
+        <Router />
     )
 }
     
