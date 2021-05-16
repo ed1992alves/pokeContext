@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+
+import "./index.less";
 
 const About = () => {
-    return (
-        <>
-           About Us
-        </>
-    );
-}
+  return (
+    <>
+      <div className="card"></div>
+    </>
+  );
+};
 
 export default About;
