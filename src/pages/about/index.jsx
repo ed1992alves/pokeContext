@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import Card from "./components/card/"
 import "./styles.less"
@@ -17,5 +18,18 @@ const About = () => {
         </>
     );
 }
+=======
+import React from "react";
+
+import "./index.less";
+
+const About = () => {
+  return (
+    <>
+      <div className="card"></div>
+    </>
+  );
+};
+>>>>>>> cb2e6d9 (home page done)
 
 export default About;
