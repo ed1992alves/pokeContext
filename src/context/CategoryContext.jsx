@@ -21,11 +21,9 @@ export const CategoryProvider = ({children}) => {
 
         if (categories) {
 
-            let variable = categories.filter(category => {
+            return  categories.filter(category => {
                 return category.name.toLowerCase().match(regex.toLowerCase());
             })
-
-            return variable
 
         }
         return [];
