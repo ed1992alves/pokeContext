@@ -26,6 +26,7 @@ const Search = () => {
            Search
            <SearchInput setSearchTerm ={setSearchTerm}></SearchInput>
 
+
         </>
     );
 }
