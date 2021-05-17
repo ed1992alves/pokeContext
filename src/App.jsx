@@ -1,11 +1,8 @@
 import React from "react";
 import { hot } from "react-hot-loader";
-import Router from "./router"
+import Router from "./router";
 const App = (props) => {
-    return (
-        <Router />
-    )
-}
-    
-   
+  return <Router />;
+};
+
 export default hot(module)(App);
