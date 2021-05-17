@@ -17,7 +17,6 @@ const Search = () => {
             setFilteredCategories(categories)
             return 
         }
-        console.log(searchTerm)
        filterCategories(searchTerm)
     }, [searchTerm])
 
