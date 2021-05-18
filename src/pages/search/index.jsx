@@ -30,7 +30,7 @@ const Search = () => {
 
     useEffect(() => {
         fetchInfo();
-    },[info]); 
+    },[]); 
 
     return (
         <>
