@@ -1,37 +1,65 @@
 
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./styles.less";
 
 import {ProductContext} from "../../context/ProductContext";
+import { CategoryContext} from "../../context/CategoryContext"
 
 const Category = (props) => {
   const { id } = useParams();
 
+  const {products,addProducts, getFilteredProducts} = useContext(ProductContext);
+  const {categories, getCategoryById, setProductsIdsByCategoryId, fetchCategories, getProductsIdsByCategoryId} = useContext(CategoryContext);
 
-  //console.log(useContext(ProductContext))
-  const {products, addProduct} = useContext(ProductContext);
-  //console.log(addProduct)
-
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [fetchedProducts, setFetchProducts] = useState(false)
 
   useEffect (() =>{
-    fetch(`https://pt.openfoodfacts.org/categoria/${id}?json=true`)
-        .then((response) => response.json())
-        .then(
-          (data) => {
-            addProduct(data.products);
-          }
-        )
-        .catch(
-            (data) => {console.log(data)}
-        )
-  }, [id])
+    if(categories) return 
+    fetchCategories()
+  }, [])
 
-  console.log(products)
+  useEffect ( () =>{
+
+  if(fetchedProducts || !categories) return 
+
+  fetch("https://pt.openfoodfacts.org/categoria/" + id + "?json=true")
+      .then((response) => response.json())
+      .then((data) => {
+        let ids = data.products.map(product => product._id)
+        setProductsIdsByCategoryId(id, ids)
+        addProducts(data.products);
+        setFetchProducts(true)
+      })
+      .catch(
+          (data) => {console.log(data)}
+      )
+
+  }, [categories, fetchedProducts ])
+
+  useEffect(() => {
+    if(! products || ! categories || !fetchedProducts) return 
+
+    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryId(id)))
+   
+  }
+  , [products, categories, fetchedProducts])
+
+
   return (
+
     <div>
-        {products.map((product) => {
-            <p>{product.product_name}</p>
-        })}
+      <div className="products-container">
+        {
+          filteredProducts?.map((product) => (
+            <div key={product.id} className="product-card">
+              <h3 className="product-title">{product?.product_name}</h3>
+              <img className="product-img" src={product?.image_front_small_url} alt="Product Image" width="150" height="150"></img>
+            </div>
+          ))
+        }
+      </div>
     </div>
   );
 };

@@ -1,25 +1,35 @@
 import React from 'react'
 import { useParams } from 'react-router';
 
+import {ProductContext} from "../../context/ProductContext"
+
 const Product = () => {
 
-    const params = useParams();
-    const [product, setProduct] = useState([]);
+    const {id} = useParams();
+    const [product, setProduct] = useContext(ProductContext);
+
+    //NAO È ESTE FILE -.-
 
     useEffect(() => {
-        fetch("https://pt.openfoodfacts.org/api/produto/" + params.id )
+        fetch("https://pt.openfoodfacts.org/categoria/" + id + "?json=true")
         .then(response => response.json())
         .then(response => {
-            setProduct(response);
+            response.map((product)=>{
+                //setProduct(product);
+            })
         });
         
-    }, [params.id])
+    }, [id])
 
-    console.log(product);
 
     return (
         <div>
-            <p>Product</p>
+            <div className="product-card">
+                {product?.map((product)=>{
+                        <p>{product.product_name}</p>
+                    })
+                }
+            </div>
         </div>
     )
 }
