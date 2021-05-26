@@ -1,50 +1,63 @@
-import React, { useEffect, useContext, useState } from 'react';
-import InfoContext from '../../Context';
+import React, { useEffect, useContext, useState } from 'react'
+import InfoContext from '../../Context'
 import InfoPiece from '../../components/infoPiece'
 
-let data;
-
 const Search = () => {
+  const { info, setInfo } = useContext(InfoContext)
 
-    const {info, setInfo} = useContext(InfoContext);
+  const [name, setName] = useState('')
 
-    const [name, setName] = useState('');
+  const [data, setData] = useState([])
 
-    async function fetchInfo() {  
-        await fetch(`https://pt.openfoodfacts.org/categories?json=true`)
-        .then(response => response.json())
-        .then(data => {
-          setInfo(data);
-        });
-      }
+  const updateName = (e) => {
+    setName(e.target.value)
+  }
 
-    const updateName = e => {
-        setName(e.target.value);
+  async function fetchInfo() {
+    await fetch(`https://pt.openfoodfacts.org/categories?json=true`)
+      .then((response) => response.json())
+      .then((data) => {
+        setInfo(data)
+      })
+  }
+
+  useEffect(() => {
+    fetchInfo()
+  }, [])
+
+  useEffect(() => {
+    if (name != null && name !== '') {
+      setData(info.tags?.slice(0, 20))
+    } else {
+      setData([])
     }
+  }, [name])
 
-    useEffect(() => {
-        data = info.tags?.slice(0, 20);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
 
-        console.log(typeof(name));
-    }); 
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nome do produto:
+          <input type="text" name="name" value={name} onChange={updateName} />
+        </label>
+      </form>
 
-    useEffect(() => {
-        fetchInfo();
-    },[]); 
-
-    return (
-        <>
-        <form>
-          <label>
-            Nome do produto:  
-            <input type="text" name="name" value={name} onChange={updateName} />
-          </label>  
-        </form>
-
-        {data?.filter(pieceInfo => pieceInfo.name.includes(name)).map((pieceInfo, index) => (
-        <InfoPiece key={index.toString()} name={pieceInfo.name} products={pieceInfo.products} />))}  
-        </>
-    );
+      {console.log(JSON.stringify(data))}
+      {data
+        ?.filter((pieceInfo) => pieceInfo.name.includes(name))
+        .map((pieceInfo, index) => (
+          <InfoPiece
+            key={index.toString()}
+            name={pieceInfo.name}
+            products={pieceInfo.products}
+          />
+        ))}
+    </>
+  )
 }
 
-export default Search;
+export default Search

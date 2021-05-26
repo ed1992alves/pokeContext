@@ -1,16 +1,16 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const InfoContext = React.createContext()
 export const InfoProvider = (props) => {
+  const { children } = props
 
-    const {children} = props
+  const [info, setInfo] = useState([])
 
-    const [info, setInfo] = useState([]); 
-
-    return (<InfoContext.Provider value={{info, setInfo}}>
-            {children}
-        </InfoContext.Provider>)
-
+  return (
+    <InfoContext.Provider value={{ info, setInfo }}>
+      {children}
+    </InfoContext.Provider>
+  )
 }
 
-export default InfoContext;
+export default InfoContext
