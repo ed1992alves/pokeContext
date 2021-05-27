@@ -1,23 +1,31 @@
-@import (css)
-  url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+@import "colors.less";
 
 :root {
-  --black: #000000;
-  --white: #fffaff;
-  --dark-grey: #282828;
-  --grey: #413c3c;
-  --purple-1: #3500d3;
-  --purple-2: #240090;
-  --purple-3: #190061;
-  --purple-4: #0c0032;
-  --blue-header: #6bd0ffcc;
-
-  --font-montserrat: Montserrat;
-
-  --index-header: 3;
+  height: 100%;
 }
 
 body {
-  background-color: var(--purple-4);
-  color: var(--white);
+  height: 100%;
+  line-height: 1.7em;
+  font-size: 14px;
+  color: @body-background-color;
+  font-family: "Hind", sans-serif;
+  margin: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+a {
+  background-color: transparent;
 }

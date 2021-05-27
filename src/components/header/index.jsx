@@ -1,16 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./index.less";
+import "./styles.less";
 
 const Header = () => {
   return (
-    <header className="navbar">
-      <div className="navbar-center">
-        <Link to="/">Home</Link>
-        <Link to="/about">About Us</Link>
-        <Link to="/search">Search</Link>
-      </div>
-    </header>
+    <nav className="navbar">
+      <ul className="menu">
+        <li>
+          <Link className="link" to="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link className="link" to="/about">
+            About Us
+          </Link>
+        </li>
+        <li>
+          <Link className="link" to="/search">
+            Search
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
