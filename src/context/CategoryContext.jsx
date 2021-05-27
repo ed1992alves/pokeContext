@@ -1,7 +1,10 @@
 import React, {createContext, useState} from "react";
 
 const initialCategory = [];
+<<<<<<< HEAD
 const numberOfProductsByPage = 10;
+=======
+>>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
 
 export const CategoryContext = createContext(initialCategory);
 
@@ -22,7 +25,13 @@ export const CategoryProvider = ({children}) => {
 
         if (categories) {
 
+<<<<<<< HEAD
             return  categories.filter(category => category.name.toLowerCase().match(regex.toLowerCase()))
+=======
+            return  categories.filter(category => {
+                return category.name.toLowerCase().match(regex.toLowerCase());
+            })
+>>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
 
         }
         return [];
@@ -30,6 +39,7 @@ export const CategoryProvider = ({children}) => {
 
     const getCategoryByName = (name) => categories.filter(category => category.name === name);
     
+<<<<<<< HEAD
     const getCategoryById = (id) => categories ? categories.filter(category =>  category.url.substring(category.url.lastIndexOf('/') + 1) === id) :  null
         
     
@@ -92,6 +102,17 @@ export const CategoryProvider = ({children}) => {
 
         return allProducts.slice(firstProductByPage, firstProductByPage + numberOfProductsByPage)
     }
+=======
+    const getCategoryById = (id) => categories.filter(category =>  category.url.substring(category.url.lastIndexOf('/') + 1) === id);
+
+    const setProductsIdsByCategoryId = (categoryId, ids) => {
+        const changedCategory = getCategoryById(categoryId)[0].ids = ids 
+        setCategories([...categories])
+    }
+
+    const getProductsIdsByCategoryId = (categoryId) => 
+     getCategoryById(categoryId)[0].ids;
+>>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
 
  
     return (
@@ -104,11 +125,15 @@ export const CategoryProvider = ({children}) => {
                 setSelectedCategory, 
                 setProductsIdsByCategoryId, 
                 getCategoryById, 
+<<<<<<< HEAD
                 getProductsIdsByCategoryId,
                 changeActualPage,
                 getActualPageByCategoryId, 
                 getTotalPagesByCategoryId,
                 getProductsIdsByCategoryIdAndPage
+=======
+                getProductsIdsByCategoryId
+>>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
              }}>
             {children}
         </CategoryContext.Provider>
