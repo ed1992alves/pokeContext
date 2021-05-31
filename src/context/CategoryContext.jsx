@@ -1,6 +1,7 @@
 import React, {createContext, useState} from "react";
 
 const initialCategory = [];
+const numberOfProductsByPage = 10;
 
 export const CategoryContext = createContext(initialCategory);
 
@@ -21,9 +22,7 @@ export const CategoryProvider = ({children}) => {
 
         if (categories) {
 
-            return  categories.filter(category => {
-                return category.name.toLowerCase().match(regex.toLowerCase());
-            })
+            return  categories.filter(category => category.name.toLowerCase().match(regex.toLowerCase()))
 
         }
         return [];
@@ -31,15 +30,69 @@ export const CategoryProvider = ({children}) => {
 
     const getCategoryByName = (name) => categories.filter(category => category.name === name);
     
-    const getCategoryById = (id) => categories.filter(category =>  category.url.substring(category.url.lastIndexOf('/') + 1) === id);
-
+    const getCategoryById = (id) => categories ? categories.filter(category =>  category.url.substring(category.url.lastIndexOf('/') + 1) === id) :  null
+        
+    
     const setProductsIdsByCategoryId = (categoryId, ids) => {
-        const changedCategory = getCategoryById(categoryId)[0].ids = ids 
+        const categoryById = getCategoryById(categoryId)
+        if(!categoryById ) return 
+        const changedCategory = categoryById [0]
+        changedCategory.ids = ids;
+        changedCategory.actualPage = 1;
+        changedCategory.totalPages = Math.trunc(ids.length / numberOfProductsByPage);
         setCategories([...categories])
     }
+    
+    const changeActualPage = (categoryId, newActualPage) => {
+        console.log(categoryId, newActualPage)
+        const categoryById = getCategoryById(categoryId)
+        if(!categoryById ) return 
 
-    const getProductsIdsByCategoryId = (categoryId) => 
-     getCategoryById(categoryId)[0].ids;
+        const changedCategory = categoryById [0]
+        changedCategory.actualPage = newActualPage;
+
+        setCategories([...categories]);
+    }
+
+    const getActualPageByCategoryId = (categoryId) => {
+        const categoryById = getCategoryById(categoryId)
+        if(!categoryById ) return 
+
+        const changedCategory = categoryById [0]
+        
+        return changedCategory.actualPage;
+    }
+
+    const getTotalPagesByCategoryId = (categoryId) => {
+        const categoryById = getCategoryById(categoryId)
+        if(!categoryById ) return 
+
+        const changedCategory = categoryById [0]
+        
+        return changedCategory.totalPages;
+    }
+
+    const getProductsIdsByCategoryId = (categoryId) =>  {
+
+       const categoryById = getCategoryById(categoryId)
+
+       if(!categoryById || !categoryById.length) return []
+
+       console.log(categoryById[0].ids ? categoryById[0].ids : [])
+
+       return categoryById[0].ids ? categoryById[0].ids : []; 
+    }
+
+    const getProductsIdsByCategoryIdAndPage = (categoryId) =>  {
+        
+        // getProductsIdsByCategoryId 
+
+        // getActualPageByCategoryId
+
+        // recebe todos os productos de uma categoria e filtra consuante a pagina em que estamos 
+
+        // exemplo : produtos [1,2,3,4,5,6,7,8,9,10,11,12,13,14] e estamos na páginas 2 o retorno deve ser [10,11,12,13,14]
+    }
 
  
     return (
@@ -52,7 +105,10 @@ export const CategoryProvider = ({children}) => {
                 setSelectedCategory, 
                 setProductsIdsByCategoryId, 
                 getCategoryById, 
-                getProductsIdsByCategoryId
+                getProductsIdsByCategoryId,
+                changeActualPage,
+                getActualPageByCategoryId, 
+                getTotalPagesByCategoryId
              }}>
             {children}
         </CategoryContext.Provider>

@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import {CategoryContext} from "../../context/CategoryContext"
 import {Link}  from "react-router-dom";
 
-
+import "./styles.less";
 
 const Home = () => {
 
@@ -24,10 +24,12 @@ const Home = () => {
       {!categories && 
         <div>Loading</div>
       }
-      {categories && categories?.map((category, index) => (
-     
-        <Link to={`category/${getCategoryId(category.url)}`} onClick={() => setSelectedCategory(category.name)}  key={category + index}><div>{category.name}</div></Link>
-      ))}
+      <div className="categorys-list">
+        {categories && categories?.map((category, index) => (
+      
+          <Link to={`category/${getCategoryId(category.url)}`} onClick={() => setSelectedCategory(category.name)}  key={category + index}><div>{category.name}</div></Link>
+        ))}
+      </div>
     </div>
   );
 };
