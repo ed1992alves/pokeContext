@@ -14,16 +14,18 @@ const Category = (props) => {
   const {products,addProducts, getFilteredProducts} = useContext(ProductContext);
   const {
     categories, 
-    getCategoryById, 
-    setProductsIdsByCategoryId, 
-    fetchCategories, 
-    getProductsIdsByCategoryId, 
-    getTotalPagesByCategoryId, 
-    getActualPageByCategoryId, 
+    getCategoryById,
+    setProductsIdsByCategoryId,
+    fetchCategories,
+    getProductsIdsByCategoryId,
+    getTotalPagesByCategoryId,
+    getActualPageByCategoryId,
+    getProductsIdsByCategoryIdAndPage,
     changeActualPage
   } = useContext(CategoryContext);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [changedPage, setChangedPage] = useState(false);
 
   useEffect (() =>{
     if(categories) return 
@@ -32,12 +34,12 @@ const Category = (props) => {
 
   useEffect ( () =>{
 
-    if(getProductsIdsByCategoryId(id).length) return 
+    if(getProductsIdsByCategoryId(id).length) return
 
     fetch(`https://pt.openfoodfacts.org/categoria/${id}?json=true`)
       .then((response) => response.json())
       .then((data) => {
-        let ids = data.products.map(product => product._id)
+        let ids = data.products.map(product => product.id)
         setProductsIdsByCategoryId(id, ids)
         addProducts(data.products);
       })
@@ -48,12 +50,14 @@ const Category = (props) => {
   }, [categories])
 
   useEffect(() => {
-    if(! products || ! categories) return 
+    if(! products || ! categories) return
 
-    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryId(id)))
-   
+    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryIdAndPage(id)))
+
+    setChangedPage(false);
   }
-  , [products, categories])
+  , [products, categories, changedPage])
+
 
 
   return (
@@ -64,15 +68,15 @@ const Category = (props) => {
           filteredProducts?.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id} className="product-card">            
               <h3 className="product-title">{product?.product_name}</h3>
-              <img className="product-img" src={product?.image_front_small_url} alt="Product Image" width="150" height="150"></img>
+              <img className="product-img" src={product?.image_front_small_url} alt="Product Image" width="150" height="150"/>
             </Link>
           ))
         }
             </div>
       <div className="products-pagination-btn-container">
 
-        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)+1)} text="prev" chevron="left" disabled={getActualPageByCategoryId(id)==1}/>
-        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)-1)} text="next" chevron="right" disabled={getActualPageByCategoryId(id)==getTotalPagesByCategoryId(id)}/>
+        <Button onClickCallback={() => {changeActualPage(id, getActualPageByCategoryId(id)-1); setChangedPage(true)}} text="prev" chevron="left" disabled={getActualPageByCategoryId(id)===1}/>
+        <Button onClickCallback={() => {changeActualPage(id, getActualPageByCategoryId(id)+1); setChangedPage(true)}} text="next" chevron="right" disabled={getActualPageByCategoryId(id)===getTotalPagesByCategoryId(id)}/>
       </div>
     </div>
   );
