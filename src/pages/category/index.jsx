@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, {useContext, useEffect, useState} from 'react'
 import { useParams, Link } from "react-router-dom";
 
@@ -37,11 +38,17 @@ const Category = (props) => {
     if(getProductsIdsByCategoryId(id).length) return 
 =======
 import React, { useEffect, useContext, useState } from "react";
+=======
+import React, { useContext, useEffect, useState } from "react";
+>>>>>>> 52ebd43 (pagination)
 import { useParams, Link } from "react-router-dom";
-import "./styles.less";
 
 import { ProductContext } from "../../context/ProductContext";
 import { CategoryContext } from "../../context/CategoryContext";
+
+import Button from "../../components/btn";
+
+import "./styles.less";
 
 const Category = (props) => {
   const { id } = useParams();
@@ -54,10 +61,13 @@ const Category = (props) => {
     setProductsIdsByCategoryId,
     fetchCategories,
     getProductsIdsByCategoryId,
+    getTotalPagesByCategoryId,
+    getActualPageByCategoryId,
+    changeActualPage,
+    getProductsIdsByCategoryIdAndPage,
   } = useContext(CategoryContext);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [fetchedProducts, setFetchProducts] = useState(false);
 
   useEffect(() => {
     if (categories) return;
@@ -65,9 +75,13 @@ const Category = (props) => {
   }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (fetchedProducts || !categories || getProductsIdsByCategoryId(id))
       return;
 >>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
+=======
+    if (getProductsIdsByCategoryId(id).length) return;
+>>>>>>> 52ebd43 (pagination)
 
     fetch(`https://pt.openfoodfacts.org/categoria/${id}?json=true`)
       .then((response) => response.json())
@@ -113,33 +127,30 @@ const Category = (props) => {
         let ids = data.products.map((product) => product._id);
         setProductsIdsByCategoryId(id, ids);
         addProducts(data.products);
-        setFetchProducts(true);
       })
       .catch((data) => {
         console.log(data);
       });
-  }, [categories, fetchedProducts]);
+  }, [categories]);
 
   useEffect(() => {
-    if (
-      !products ||
-      !categories ||
-      fetchedProducts ||
-      !getProductsIdsByCategoryId(id)
-    )
-      return;
+    if (!products || !categories) return;
 
-    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryId(id)));
-  }, [products, categories, fetchedProducts]);
+    setFilteredProducts(
+      getFilteredProducts(getProductsIdsByCategoryIdAndPage(id))
+    );
+  }, [products, categories]);
 
   return (
     <div>
       <div className="products-container">
         {filteredProducts?.map((product) => (
-          <div key={product.id} className="product-card">
-            <Link to={`/product/${product.id}`}>
-              <h3 className="product-title">{product?.product_name}</h3>
-            </Link>
+          <Link
+            to={`/product/${product.id}`}
+            key={product.id}
+            className="product-card"
+          >
+            <h3 className="product-title">{product?.product_name}</h3>
             <img
               className="product-img"
               src={product?.image_front_small_url}
@@ -147,9 +158,29 @@ const Category = (props) => {
               width="150"
               height="150"
             ></img>
-          </div>
+          </Link>
         ))}
 >>>>>>> 3e49bc5 (exercise : creating a page for an specific product)
+      </div>
+      <div className="products-pagination-btn-container">
+        <Button
+          onClickCallback={() =>
+            changeActualPage(id, getActualPageByCategoryId(id) - 1)
+          }
+          text="prev"
+          chevron="left"
+          disabled={getActualPageByCategoryId(id) == 1}
+        />
+        <Button
+          onClickCallback={() =>
+            changeActualPage(id, getActualPageByCategoryId(id) + 1)
+          }
+          text="next"
+          chevron="right"
+          disabled={
+            getActualPageByCategoryId(id) == getTotalPagesByCategoryId(id)
+          }
+        />
       </div>
     </div>
   );
