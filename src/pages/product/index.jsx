@@ -1,44 +1,45 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { ProductContext } from "../../context/ProductContext";
-
-import "./styles.less";
+import React, {useContext, useEffect, useState} from 'react'
+import { useParams } from 'react-router';
+import {ProductContext} from "../../context/ProductContext"
+import "./index.less";
 
 const Product = () => {
-  const { id } = useParams();
-  const { getFilteredProducts } = useContext(ProductContext);
 
-  const [product, setProduct] = useState([]);
-  const [fetchedProduct, setFetchProduct] = useState(false);
 
-  useEffect(() => {
-    if (fetchedProduct || getFilteredProducts(id)[0]) return;
+    const { id } = useParams();
+    const { getProductById, addProducts } = useContext(ProductContext);
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${id}?json=true`)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response.product);
-        setProduct(response.product);
-        setFetchProduct(true);
-      });
-  }, [fetchedProduct]);
+    const [product, setProduct] = useState(null)
 
-  useEffect(() => {
-    if (!product || fetchedProduct || !getFilteredProducts(id)[0]) return;
+    useEffect(() => {
+        const productById = getProductById(id)[0]
 
-    setProduct(getFilteredProducts(id)[0]);
-  }, [product, fetchedProduct]);
 
-  return (
-    <div className="product-container">
+        if(productById) {
+          setProduct(productById);
+          console.log(product);
+          return; 
+        }
+
+        fetch(`https://world.openfoodfacts.org/api/v0/product/${id}?json=true`)
+        .then(response => response.json())
+        .then(response => {
+          addProducts([response.product]);
+          setProduct(response.product);
+        })
+    
+      }
+    , [id])
+
+
+    return (
+        <div className="product-container">
       {product ? (
         <div className="product">
           <img
             className="img"
-            src={product?.image_front_small_url}
+            src={product.image_front_small_url}
             alt="Product Image"
-            width="300"
-            height="300"
           ></img>
           <div className="product-description">
             <p>{product.product_name}</p>
@@ -54,7 +55,7 @@ const Product = () => {
         "Loading..."
       )}
     </div>
-  );
-};
+    )
+}
 
 export default Product;
