@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-const About = () => {
-  return (
-    <>
-      <h3>About Us</h3>
-      <ul>
-        <li>Edgar</li>
-        <li>Vítor</li>
-        <li>Luís</li>
-        <li>Samuel</li>
-        <li>Daniel</li>
-        <li>Tojo</li>
-        <li>Diogo</li>
-      </ul>
-    </>
-  )
-=======
 import React from 'react';
 import Card from "./components/card/"
 import "./styles.less"
@@ -35,7 +16,6 @@ const About = () => {
             </div>
         </>
     );
->>>>>>> master_vitor
 }
 
 export default About
