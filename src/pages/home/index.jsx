@@ -1,42 +1,38 @@
-import React, { useEffect, useContext } from 'react'
-import InfoContext from '../../Context'
-import InfoPiece from '../../components/infoPiece'
+import React, { useContext, useEffect } from "react";
+
+import {CategoryContext} from "../../context/CategoryContext"
+import {Link}  from "react-router-dom";
+
+import "./styles.less";
 
 const Home = () => {
   const { info, setInfo } = useContext(InfoContext)
 
-  async function fetchInfo() {
-    await fetch(`https://pt.openfoodfacts.org/categories?json=true`)
-      .then((response) => response.json())
-      .then((data) => {
-        setInfo(data)
-      })
+  const getCategoryId = (url) => {
+    
+    return url.substring(url.lastIndexOf('/') + 1);
   }
 
-  useEffect(() => {
-    fetchInfo()
+  const {categories, fetchCategories, setSelectedCategory}  = useContext(CategoryContext)
+
+  useEffect(()=> {
+    if(categories) return
+    fetchCategories()
   }, [])
 
-  useEffect(() => {
-    const data = JSON.stringify(info)
-
-    if (data != null && data.length > 0 && data !== '[]') {
-      console.log(JSON.stringify(info))
-    }
-  }, [info])
-
   return (
-    <>
-      <h3>Top 20 Categorias de Produtos</h3>
-      {info.tags?.slice(0, 20).map((pieceInfo, index) => (
-        <InfoPiece
-          key={index.toString()}
-          name={pieceInfo.name}
-          products={pieceInfo.products}
-        />
-      ))}
-    </>
-  )
-}
+    <div>
+      {!categories && 
+        <div>Loading</div>
+      }
+      <div className="categorys-list">
+        {categories && categories?.map((category, index) => (
+      
+          <Link to={`category/${getCategoryId(category.url)}`} onClick={() => setSelectedCategory(category.name)}  key={category + index}><div>{category.name}</div></Link>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Home

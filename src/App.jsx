@@ -1,13 +1,8 @@
-import React from 'react'
-import { hot } from 'react-hot-loader'
-import Router from './router'
-import { InfoProvider } from './Context'
+import React from "react";
+import { hot } from "react-hot-loader";
+import Router from "./router";
 const App = (props) => {
-  return (
-    <InfoProvider>
-      <Router></Router>
-    </InfoProvider>
-  )
-}
+  return <Router />;
+};
 
-export default hot(module)(App)
+export default hot(module)(App);
