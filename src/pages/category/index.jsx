@@ -5,6 +5,7 @@ import {ProductContext} from "../../context/ProductContext";
 import { CategoryContext} from "../../context/CategoryContext"
 
 import Button from "../../components/btn"
+import CurrentPage from "../../components/currentPage"
 
 import "./styles.less";
 
@@ -14,13 +15,13 @@ const Category = (props) => {
   const {products,addProducts, getFilteredProducts} = useContext(ProductContext);
   const {
     categories, 
-    getCategoryById, 
     setProductsIdsByCategoryId, 
     fetchCategories, 
     getProductsIdsByCategoryId, 
     getTotalPagesByCategoryId, 
     getActualPageByCategoryId, 
-    changeActualPage
+    changeActualPage,
+    getProductsIdsByCategoryIdAndPage
   } = useContext(CategoryContext);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -50,7 +51,7 @@ const Category = (props) => {
   useEffect(() => {
     if(! products || ! categories) return 
 
-    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryId(id)))
+    setFilteredProducts(getFilteredProducts(getProductsIdsByCategoryIdAndPage(id)))
    
   }
   , [products, categories])
@@ -58,7 +59,7 @@ const Category = (props) => {
 
   return (
 
-    <div>
+    <div className="wrapper">
       <div className="products-container">
         {
           filteredProducts?.map((product) => (
@@ -70,9 +71,9 @@ const Category = (props) => {
         }
             </div>
       <div className="products-pagination-btn-container">
-
-        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)+1)} text="prev" chevron="left" disabled={getActualPageByCategoryId(id)==1}/>
-        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)-1)} text="next" chevron="right" disabled={getActualPageByCategoryId(id)==getTotalPagesByCategoryId(id)}/>
+        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)-1)} text="prev" chevron="left" disabled={getActualPageByCategoryId(id)==1}/>
+        <CurrentPage actualPage={getActualPageByCategoryId(id)} totalPages={getTotalPagesByCategoryId(id)} />
+        <Button onClickCallback={() => changeActualPage(id, getActualPageByCategoryId(id)+1)} text="next" chevron="right" disabled={getActualPageByCategoryId(id)==getTotalPagesByCategoryId(id)}/>
       </div>
     </div>
   );

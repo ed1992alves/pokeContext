@@ -39,7 +39,7 @@ export const CategoryProvider = ({children}) => {
         const changedCategory = categoryById [0]
         changedCategory.ids = ids;
         changedCategory.actualPage = 1;
-        changedCategory.totalPages = Math.trunc(ids.length / numberOfProductsByPage);
+        changedCategory.totalPages = Math.ceil(ids.length / numberOfProductsByPage);
         setCategories([...categories])
     }
     
@@ -84,14 +84,13 @@ export const CategoryProvider = ({children}) => {
     }
 
     const getProductsIdsByCategoryIdAndPage = (categoryId) =>  {
-        
-        // getProductsIdsByCategoryId 
 
-        // getActualPageByCategoryId
+        const allProducts = getProductsIdsByCategoryId(categoryId)
 
-        // recebe todos os productos de uma categoria e filtra consuante a pagina em que estamos 
+        const page = getActualPageByCategoryId(categoryId)
+        const firstProductByPage = (page-1) * numberOfProductsByPage;
 
-        // exemplo : produtos [1,2,3,4,5,6,7,8,9,10,11,12,13,14] e estamos na páginas 2 o retorno deve ser [10,11,12,13,14]
+        return allProducts.slice(firstProductByPage, firstProductByPage + numberOfProductsByPage)
     }
 
  
@@ -108,7 +107,8 @@ export const CategoryProvider = ({children}) => {
                 getProductsIdsByCategoryId,
                 changeActualPage,
                 getActualPageByCategoryId, 
-                getTotalPagesByCategoryId
+                getTotalPagesByCategoryId,
+                getProductsIdsByCategoryIdAndPage
              }}>
             {children}
         </CategoryContext.Provider>

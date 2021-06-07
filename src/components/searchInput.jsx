@@ -1,17 +1,14 @@
-import React from "react";
+import React, {useContext} from "react";
+import {CategoryContext} from '../context/CategoryContext';
 
 const SearchInput = (props) => {
-    const {setSearchTerm} = props
+    const {setSearchTerm} = props;
+    const {categories} = useContext(CategoryContext);
 
         return(
-        <>
-            <form>
-                <label>
-                    Category:
-                    <input type="text"  onChange={(event) => setSearchTerm(event.target.value)} />
-                </label>    
-            </form>   
-        </>
+            <>
+                <input type="text" onChange={(event) => setSearchTerm(event.target.value)} />
+            </>
         )
 }
 
