@@ -5,10 +5,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { CategoryContext } from "../../context/CategoryContext";
 
 import Button from "../../components/btn";
-<<<<<<< HEAD
 import CurrentPage from "../../components/currentPage";
-=======
->>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
 
 import "./styles.less";
 
@@ -19,10 +16,6 @@ const Category = (props) => {
     useContext(ProductContext);
   const {
     categories,
-<<<<<<< HEAD
-=======
-    getCategoryById,
->>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
     setProductsIdsByCategoryId,
     fetchCategories,
     getProductsIdsByCategoryId,
@@ -63,11 +56,7 @@ const Category = (props) => {
   }, [products, categories]);
 
   return (
-<<<<<<< HEAD
     <div className="wrapper">
-=======
-    <div>
->>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
       <div className="products-container">
         {filteredProducts?.map((product) => (
           <Link
@@ -95,13 +84,10 @@ const Category = (props) => {
           chevron="left"
           disabled={getActualPageByCategoryId(id) == 1}
         />
-<<<<<<< HEAD
         <CurrentPage
           actualPage={getActualPageByCategoryId(id)}
           totalPages={getTotalPagesByCategoryId(id)}
         />
-=======
->>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
         <Button
           onClickCallback={() =>
             changeActualPage(id, getActualPageByCategoryId(id) + 1)
