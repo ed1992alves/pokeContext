@@ -10,6 +10,7 @@ import Category from "./pages/category";
 import { CategoryProvider } from "./context/CategoryContext";
 import { ProductProvider } from "./context/ProductContext";
 import Product from "./pages/product";
+import Footer from "./components/footer";
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
               <Product />
             </Route>
           </Switch>
+          <Footer />
         </BrowserRouter>
       </CategoryProvider>
     </ProductProvider>

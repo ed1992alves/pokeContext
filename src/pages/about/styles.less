@@ -21,6 +21,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  max-width: 800px;
+  margin: 50px auto;
 
   .about_card {
     display: flex;
@@ -38,10 +40,6 @@
     border-radius: 5%;
     background-color: @card-background-color;
 
-    &:hover {
-      background-color: #ecdd7b;
-    }
-
     .img_card {
       height: 100px;
       border-radius: 50%;
@@ -50,6 +48,7 @@
 
     h3 {
       text-align: center;
+      margin-top: 10px;
     }
   }
 }

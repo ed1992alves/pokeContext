@@ -4,7 +4,6 @@ import "./styles.less";
 const About = () => {
   return (
     <>
-      <h2>We make nothing every day</h2>
       <div className="card_container">
         <Card
           name="Edgar"
