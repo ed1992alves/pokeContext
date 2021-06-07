@@ -6,7 +6,11 @@ import Header from "./components/header";
 import Home from "./pages/home";
 import About from "./pages/about";
 import Search from "./pages/search";
+<<<<<<< HEAD
 import Category from "./pages/category";
+=======
+import Category from "./pages/category"
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
 import { CategoryProvider } from "./context/CategoryContext";
 import { ProductProvider } from "./context/ProductContext";
 import Product from "./pages/product";

@@ -43,7 +43,13 @@ export const CategoryProvider = ({ children }) => {
     const changedCategory = categoryById[0];
     changedCategory.ids = ids;
     changedCategory.actualPage = 1;
+<<<<<<< HEAD
     changedCategory.totalPages = Math.ceil(ids.length / numberOfProductsByPage);
+=======
+    changedCategory.totalPages = Math.trunc(
+      ids.length / numberOfProductsByPage
+    );
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
     setCategories([...categories]);
   };
 
@@ -87,6 +93,7 @@ export const CategoryProvider = ({ children }) => {
   };
 
   const getProductsIdsByCategoryIdAndPage = (categoryId) => {
+<<<<<<< HEAD
     const allProducts = getProductsIdsByCategoryId(categoryId);
 
     const page = getActualPageByCategoryId(categoryId);
@@ -96,6 +103,13 @@ export const CategoryProvider = ({ children }) => {
       firstProductByPage,
       firstProductByPage + numberOfProductsByPage
     );
+=======
+    const products = getProductsIdsByCategoryId(categoryId);
+    const atualPage = getActualPageByCategoryId(categoryId);
+    const start = (numberOfProductsByPage - 1) * atualPage;
+
+    return products.slice(start, numberOfProductsByPage + start);
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
   };
 
   return (

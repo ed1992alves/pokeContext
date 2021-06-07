@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { ProductContext } from "../../context/ProductContext";
@@ -28,6 +29,44 @@ const Product = () => {
 
   return (
     <div className="product-container">
+=======
+import React, {useContext, useEffect, useState} from 'react'
+import { useParams } from 'react-router';
+import {ProductContext} from "../../context/ProductContext"
+import "./index.less";
+
+const Product = () => {
+
+
+    const { id } = useParams();
+    const { getProductById, addProducts } = useContext(ProductContext);
+
+    const [product, setProduct] = useState(null)
+
+    useEffect(() => {
+        const productById = getProductById(id)[0]
+
+
+        if(productById) {
+          setProduct(productById);
+          console.log(product);
+          return; 
+        }
+
+        fetch(`https://world.openfoodfacts.org/api/v0/product/${id}?json=true`)
+        .then(response => response.json())
+        .then(response => {
+          addProducts([response.product]);
+          setProduct(response.product);
+        })
+    
+      }
+    , [id])
+
+
+    return (
+        <div className="product-container">
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
       {product ? (
         <div className="product">
           <img
@@ -49,7 +88,12 @@ const Product = () => {
         "Loading..."
       )}
     </div>
+<<<<<<< HEAD
   );
 };
+=======
+    )
+}
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
 
 export default Product;

@@ -1,5 +1,10 @@
 @import "/src/colors.less";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
 // elemento com ambas as classes card_container e about_card
 /*
 .card_container.about_card {
@@ -16,6 +21,7 @@
     height: 100px;
 }*/
 
+<<<<<<< HEAD
 // nesting
 .card_container {
   display: flex;
@@ -53,3 +59,46 @@
     }
   }
 }
+=======
+
+// nesting 
+.card_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .about_card {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        margin: 20px 0px 0px 20px;
+        padding: 1vw;
+
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 200px;
+        max-height: 300px;
+        
+        border-radius: 5%;
+        background-color: @card-background-color;
+
+        &:hover{
+            background-color: #ECDD7B;
+        }
+
+        .img_card {
+            height: 100px;
+            border-radius: 50%;
+            align-self: center;
+        }
+
+        h3{
+            text-align: center;
+        }
+
+    }
+
+}
+  
+>>>>>>> 52ebd43b0ebb289b5afa0ab6c00eade56bef9525
