@@ -1,19 +1,25 @@
 @import "/src/colors.less";
 
 .product-container {
-  display: flex;
-  position: relative;
-  height: calc(100vh + 50px);
   background: @background-color;
   color: @black;
+}
+
+.product-info {
+  display: flex;
+  position: relative;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  height: calc(100vh - 100px);
 }
 
 .product {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
   padding: 16px;
   background-color: @card-background-color;
-  margin: auto;
   border-radius: 10px;
 
   img {
