@@ -3,7 +3,7 @@
 .product-container {
   display: flex;
   position: relative;
-  height: calc(100vh - 100px);
+  height: calc(100vh + 50px);
   background: @background-color;
   color: @black;
   justify-content: center;
@@ -11,29 +11,37 @@
 
 .product {
   position: relative;
-  justify-content: center;
   padding: 16px;
   background-color: @card-background-color;
   margin: auto;
   border-radius: 10px;
-}
 
-.product img {
-  width: 300px;
-  height: 300px;
-  justify-content: center;
-  border-radius: 10px;
+  img {
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    border-radius: 10px;
+  }
 }
 
 .product-description {
   padding: 16px 0 16px 0;
   font-size: 14px;
+
+  p {
+    padding: 10px 20px 0;
+  }
+
+  b {
+    color: @green;
+  }
 }
 
-.product-description p {
-  padding: 10px 20px 0;
+.loading {
+  color: @white;
+  font-size: 16px;
 }
 
-.product-description b {
-  color: @green;
+.back-btn {
+  left: 0;
 }

@@ -19,20 +19,19 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      {!categories && <div>Loading</div>}
-      <div className="categorys-list">
-        {categories &&
-          categories?.map((category, index) => (
-            <Link
-              to={`category/${getCategoryId(category.url)}`}
-              onClick={() => setSelectedCategory(category.name)}
-              key={category + index}
-            >
-              <div>{category.name}</div>
-            </Link>
-          ))}
-      </div>
+    <div className="categorys-list">
+      {!categories && <div className="loading">Loading...</div>}
+
+      {categories &&
+        categories?.map((category, index) => (
+          <Link
+            to={`category/${getCategoryId(category.url)}`}
+            onClick={() => setSelectedCategory(category.name)}
+            key={category + index}
+          >
+            <div>{category.name}</div>
+          </Link>
+        ))}
     </div>
   );
 };

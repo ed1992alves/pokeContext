@@ -56,50 +56,57 @@ const Category = (props) => {
   }, [products, categories]);
 
   return (
-    <div className="wrapper">
-      <div className="products-container">
-        {filteredProducts?.map((product) => (
-          <Link
-            to={`/product/${product.id}`}
-            key={product.id}
-            className="product-card"
-          >
-            <h3 className="product-title">{product?.product_name}</h3>
-            <img
-              className="product-img"
-              src={product?.image_front_small_url}
-              alt="Product Image"
-              width="150"
-              height="150"
-            ></img>
-          </Link>
-        ))}
+    <>
+      <Link className="back-btn" to={"/"}>
+        Back to Home
+      </Link>
+      {!filteredProducts && <div className="loading">Loading...</div>}
+
+      <div className="wrapper">
+        <div className="products-container">
+          {filteredProducts?.map((product) => (
+            <Link
+              to={`/product/${product.id}`}
+              key={product.id}
+              className="product-card"
+            >
+              <h3 className="product-title">{product?.product_name}</h3>
+              <img
+                className="product-img"
+                src={product?.image_front_small_url}
+                alt="Product Image"
+                width="150"
+                height="150"
+              ></img>
+            </Link>
+          ))}
+        </div>
+        <div className="products-pagination-btn-container">
+          <Button
+            onClickCallback={() =>
+              changeActualPage(id, getActualPageByCategoryId(id) - 1)
+            }
+            text="prev"
+            chevron="left"
+            disabled={getActualPageByCategoryId(id) == 1}
+          />
+          <CurrentPage
+            actualPage={getActualPageByCategoryId(id)}
+            totalPages={getTotalPagesByCategoryId(id)}
+          />
+          <Button
+            onClickCallback={() =>
+              changeActualPage(id, getActualPageByCategoryId(id) + 1)
+            }
+            text="next"
+            chevron="right"
+            disabled={
+              getActualPageByCategoryId(id) == getTotalPagesByCategoryId(id)
+            }
+          />
+        </div>
       </div>
-      <div className="products-pagination-btn-container">
-        <Button
-          onClickCallback={() =>
-            changeActualPage(id, getActualPageByCategoryId(id) - 1)
-          }
-          text="prev"
-          chevron="left"
-          disabled={getActualPageByCategoryId(id) == 1}
-        />
-        <CurrentPage
-          actualPage={getActualPageByCategoryId(id)}
-          totalPages={getTotalPagesByCategoryId(id)}
-        />
-        <Button
-          onClickCallback={() =>
-            changeActualPage(id, getActualPageByCategoryId(id) + 1)
-          }
-          text="next"
-          chevron="right"
-          disabled={
-            getActualPageByCategoryId(id) == getTotalPagesByCategoryId(id)
-          }
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,16 @@
 @import "/src/colors.less";
+.wrapper {
+  max-width: 90%;
+  margin: 16px auto;
+  padding-bottom: 60px;
+}
+
 .products-container {
   display: flex;
   flex-flow: wrap row;
   justify-content: center;
-}
-
-.wrapper {
-  max-width: 90%;
-  margin: 16px auto;
+  max-width: 700px;
+  margin: auto;
 }
 
 .product-card {
@@ -24,11 +27,11 @@
   h3 {
     color: black;
   }
-}
 
-.product-card:hover {
-  box-shadow: 0 0 30px @orange;
-  transition: box-shadow 0.5s ease;
+  &:hover {
+    box-shadow: 0 0 30px @orange;
+    transition: box-shadow 0.5s ease;
+  }
 }
 
 .product-title {
@@ -48,4 +51,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 5px;
+}
+
+.loading {
+  color: @white;
+}
+
+.back-btn {
+  position: absolute;
+  text-decoration: none;
+  color: @orange;
+  font-size: 18px;
+  padding: 20px;
 }

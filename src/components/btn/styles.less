@@ -9,6 +9,7 @@
   -moz-user-select: none; /* Old versions of Firefox */
   user-select: none; /* Non-prefixed version*/
   transition: transform 0.8s;
+  color: @white;
 }
 
 .btn-container {
@@ -20,6 +21,7 @@
   outline: 0;
   border: 1px solid @white;
   cursor: pointer;
+  border-radius: 5px;
 
   &:hover .btn {
     transform: translateX(-6px);
@@ -30,6 +32,7 @@
       &::before {
         opacity: 1;
         right: 12px;
+        color: @white;
       }
     }
 
@@ -73,7 +76,26 @@
 }
 
 .disabled {
-  color: #fdfdfda6;
+  background-color: #fdfdfd5e;
+
+  .btn {
+    cursor: default;
+  }
+
+  .btn-container {
+    cursor: default;
+
+    &.chevron {
+      &:hover {
+        &::before {
+          opacity: 0;
+        }
+      }
+    }
+    &:hover .btn {
+      transform: translateX(0);
+    }
+  }
 }
 
 .chevron.right:before {
